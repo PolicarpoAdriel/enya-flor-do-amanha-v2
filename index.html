@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Enya, Flor do Amanhã - Loja Oficial LF Jóia Rara">
+  <title>Enya, Flor do Amanhã | Loja Virtual</title>
+  
+  <style>
+    :root {
+      --bg: #090d16;
+      --card: #111827;
+      --text: #f9fafb;
+      --muted: #9ca3af;
+      --accent: #10b981;
+      --border: #1f2937;
+    }
+    
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { background: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; }
+    
+    .nav { background: var(--card); border-bottom: 1px solid var(--border); padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 900; }
+    .logo { font-size: 1.2rem; font-weight: 800; color: var(--accent); }
+    .btn-main { background: var(--accent); color: #000; padding: 8px 16px; border-radius: 20px; text-decoration: none; font-weight: 700; }
+    
+    .container { max-width: 800px; margin: 0 auto; padding: 24px 16px; }
+    
+    header { text-align: center; margin: 20px 0; }
+    h1 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; color: var(--accent); }
+    .subtitle { color: var(--muted); }
+    
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0; }
+    .stat { background: var(--card); border: 1px solid var(--border); padding: 14px; border-radius: 10px; text-align: center; }
+    .stat-num { font-size: 1.4rem; font-weight: 800; }
+    .stat-label { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; }
+    
+    .filters { display: flex; gap: 8px; flex-wrap: wrap; margin: 20px 0; }
+    .search { flex: 1; min-width: 200px; padding: 12px; border: 1px solid var(--border); background: var(--card); color: var(--text); border-radius: 8px; }
+    .tab { padding: 10px 18px; border: 1px solid var(--border); background: var(--card); color: var(--muted); border-radius: 8px; cursor: pointer; }
+    .tab.active { background: var(--accent); color: #000; }
+    
+    .links { display: flex; flex-direction: column; gap: 12px; }
+    .link-card { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; background: var(--card); border: 1px solid var(--border); border-radius: 10px; text-decoration: none; color: var(--text); transition: all 0.2s; }
+    .link-card:hover { border-color: var(--accent); box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
+    
+    .badge { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 3px 8px; border-radius: 4px; margin-bottom: 6px; }
+    .badge-shopee { background: rgba(238, 77, 45, 0.15); color: #ee4d2d; }
+    .badge-amazon { background: rgba(255, 153, 0, 0.15); color: #ff9900; }
+    .badge-aliexpress { background: rgba(255, 71, 71, 0.15); color: #ff4747; }
+    
+    .url { font-size: 0.85rem; color: var(--muted); }
+    .buy-btn { background: rgba(16, 185, 129, 0.15); color: var(--accent); padding: 8px 16px; border-radius: 6px; font-weight: 700; }
+    
+    .footer { background: var(--card); border-top: 1px solid var(--border); padding: 20px; margin-top: 40px; font-size: 0.75rem; color: var(--muted); text-align: center; }
+    
+    .sdr-btn { position: fixed; bottom: 20px; right: 20px; background: var(--accent); color: #000; padding: 14px 20px; border: none; border-radius: 30px; font-weight: 800; cursor: pointer; z-index: 1000; box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4); }
+    .sdr-btn:hover { transform: scale(1.05); }
+    
+    .empty { text-align: center; color: var(--muted); padding: 40px; }
+  </style>
+</head>
+<body>
+
+  <nav class="nav">
+    <div class="logo">🌸 ENYA, FLOR DO AMANHÃ</div>
+    <a href="https://flordoamanha.com.br" target="_blank" class="btn-main">Site Oficial →</a>
+  </nav>
+
+  <div class="container">
+    <header>
+      <h1>Enya, Flor do Amanhã</h1>
+      <p class="subtitle">Curadoria Inteligente | LF Jóia Rara</p>
+    </header>
+
+    <div class="stats">
+      <div class="stat"><div class="stat-num">13</div><div class="stat-label">AliExpress</div></div>
+      <div class="stat"><div class="stat-num">17</div><div class="stat-label">Amazon</div></div>
+      <div class="stat"><div class="stat-num">14</div><div class="stat-label">Shopee</div></div>
+    </div>
+
+    <div class="filters">
+      <input type="text" id="search" class="search" placeholder="Buscar produtos..." oninput="applyFilters()">
+      <button class="tab active" onclick="setPlatform('ALL', this)">Todos</button>
+      <button class="tab" onclick="setPlatform('AliExpress', this)">AliExpress</button>
+      <button class="tab" onclick="setPlatform('Amazon', this)">Amazon</button>
+      <button class="tab" onclick="setPlatform('Shopee', this)">Shopee</button>
+    </div>
+
+    <div class="links" id="linksContainer">
+      <div class="empty">Carregando produtos...</div>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <p><strong>LF Jóia Rara | Enya, Flor do Amanhã</strong></p>
+    <p>CNPJ: 41.547.052/0001-60 | Email: pmotorista25@gmail.com | Criciúma, SC, Brasil</p>
+    <p style="margin-top: 10px;">⚠️ Somos divulgadores afiliados. Preços são responsabilidade das plataformas parceiras.</p>
+  </footer>
+
+  <button class="sdr-btn" onclick="alert('💬 Chat IA em desenvolvimento!')">💬 Atendimento IA</button>
+
+  <script>
+    let allLinks = [];
+    let activePlatform = 'ALL';
+
+    async function init() {
+      try {
+        const response = await fetch('data.json');
+        const json = await response.json();
+        
+        allLinks = [];
+        json.affiliate_data.forEach(group => {
+          group.links.forEach(url => {
+            allLinks.push({ platform: group.platform, url: url, keyword: group.keyword });
+          });
+        });
+
+        applyFilters();
+      } catch (err) {
+        console.error('Erro:', err);
+        document.getElementById('linksContainer').innerHTML = '<div class="empty">❌ Erro ao carregar. Recarregue a página.</div>';
+      }
+    }
+
+    function setPlatform(platform, element) {
+      activePlatform = platform;
+      document.querySelectorAll('.tab').forEach(btn => btn.classList.remove('active'));
+      element.classList.add('active');
+      applyFilters();
+    }
+
+    function applyFilters() {
+      const query = document.getElementById('search').value.toLowerCase();
+      const filtered = allLinks.filter(item => {
+        const matchPlatform = activePlatform === 'ALL' || item.platform === activePlatform;
+        const matchSearch = item.url.toLowerCase().includes(query) || item.platform.toLowerCase().includes(query);
+        return matchPlatform && matchSearch;
+      });
+      render(filtered);
+    }
+
+    function render(items) {
+      const container = document.getElementById('linksContainer');
+      if (items.length === 0) {
+        container.innerHTML = '<div class="empty">🔍 Nenhum produto encontrado.</div>';
+        return;
+      }
+
+      const badgeClass = {
+        'Shopee': 'badge-shopee',
+        'Amazon': 'badge-amazon',
+        'AliExpress': 'badge-aliexpress'
+      };
+
+      container.innerHTML = items.map(item => `
+        <a href="${item.url}" target="_blank" class="link-card">
+          <div>
+            <div class="badge ${badgeClass[item.platform]}">${item.platform}</div>
+            <div class="url">🔗 ${item.url}</div>
+          </div>
+          <div class="buy-btn">🛍️ Comprar</div>
+        </a>
+      `).join('');
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
